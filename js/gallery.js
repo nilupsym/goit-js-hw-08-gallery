@@ -17,7 +17,7 @@ const galleryListItem = galleryItem => {
     a.href = galleryItem.original;
 
     const img = document.createElement('img');
-    img.classList.add('gallery__image')
+    img.classList.add('gallery__image');
     img.src = galleryItem.preview;
     img.alt = galleryItem.description;
     img.dataset.source = galleryItem.original;
@@ -32,9 +32,9 @@ const galleryImages = galleryItems.map(galleryItem => galleryListItem(galleryIte
 galleryList.append(...galleryImages);
 // console.log(galleryList);
 
-galleryList.addEventListener('click', openLightbox);
+galleryList.addEventListener('click', onOpenModal);
 
-function openLightbox(event) {
+function onOpenModal(event) {
     event.preventDefault();
     window.addEventListener('keydown', onPressEscape);
     if (event.target.nodeName !== 'IMG') {
@@ -42,6 +42,8 @@ function openLightbox(event) {
     }
     lightbox.classList.add('is-open');
     lightboxImage.src = event.target.dataset.source;
+    lightboxImage.alt = event.target.alt;
+    // console.log(lightboxImage.alt);
 }
 
 // закрытие модального окна по клику на кнопку
@@ -52,6 +54,7 @@ closeLightbox.addEventListener('click', onCloseModal);
 function onCloseModal() {
     window.removeEventListener('keydown', onPressEscape);
     lightbox.classList.remove('is-open');
+    lightboxImage.src = '';
 }
 
 // Закрытие модального окна по клику на div.lightbox__overlay   
